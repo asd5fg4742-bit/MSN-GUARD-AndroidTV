@@ -1,5 +1,5 @@
 /**
- * @file sys.c
+ * @file packetproto.h
  * @author Ambroz Bizjak <ambrop7@gmail.com>
  * 
  * @section LICENSE
@@ -25,13 +25,44 @@
  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
+ * @section DESCRIPTION
+ * 
+ * Definitions for PacketProto, a protocol that allows sending of packets
+ * over a reliable stream connection.
+ * 
+ * All multi-byte integers in structs are little-endian, unless stated otherwise.
+ * 
+ * Packets are encoded into a stream by representing each packet with:
+ *   - a 16-bit little-endian unsigned integer representing the length
+ *     of the payload
+ *   - that many bytes of payload
  */
 
-#include <system/BTime.h>
+#ifndef BADVPN_PROTOCOL_PACKETPROTO_H
+#define BADVPN_PROTOCOL_PACKETPROTO_H
 
-#include <lwip/sys.h>
+#include <stdint.h>
+#include <limits.h>
 
-u32_t sys_now (void)
+#include <misc/packed.h>
+
+/**
+ * PacketProto packet header.
+ * Wraps a single uint16_t in a packed struct for easy access.
+ */
+B_START_PACKED
+struct packetproto_header
 {
-    return btime_gettime();
-}
+    /**
+     * Length of the packet payload that follows.
+     */
+    uint16_t len;
+} B_PACKED;
+B_END_PACKED
+
+#define PACKETPROTO_ENCLEN(_len) (sizeof(struct packetproto_header) + (_len))
+
+#define PACKETPROTO_MAXPAYLOAD UINT16_MAX
+
+#endif

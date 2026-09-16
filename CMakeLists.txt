@@ -1,5 +1,4 @@
-add_library(flowextra
-    PacketPassInactivityMonitor.c
-    KeepaliveIO.c
+add_library(socksclient
+    BSocksClient.c
 )
-target_link_libraries(flowextra flow system)
+target_link_libraries(socksclient system flow flowextra)

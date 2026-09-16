@@ -1,5 +1,5 @@
 /**
- * @file sys.c
+ * @file lwipopts.h
  * @author Ambroz Bizjak <ambrop7@gmail.com>
  * 
  * @section LICENSE
@@ -27,11 +27,44 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <system/BTime.h>
+#ifndef LWIP_CUSTOM_LWIPOPTS_H
+#define LWIP_CUSTOM_LWIPOPTS_H
 
-#include <lwip/sys.h>
+#define NO_SYS 1
+#define MEM_ALIGNMENT 4
 
-u32_t sys_now (void)
-{
-    return btime_gettime();
-}
+#define LWIP_ARP 0
+#define ARP_QUEUEING 0
+#define IP_FORWARD 0
+#define LWIP_ICMP 1
+#define LWIP_RAW 0
+#define LWIP_DHCP 0
+#define LWIP_AUTOIP 0
+#define LWIP_SNMP 0
+#define LWIP_IGMP 0
+#define LWIP_DNS 0
+#define LWIP_UDP 0
+#define LWIP_UDPLITE 0
+#define LWIP_TCP 1
+#define LWIP_CALLBACK_API 1
+#define LWIP_NETIF_API 0
+#define LWIP_NETIF_LOOPBACK 0
+#define LWIP_HAVE_LOOPIF 0
+#define LWIP_HAVE_SLIPIF 0
+#define LWIP_NETCONN 0
+#define LWIP_SOCKET 0
+#define PPP_SUPPORT 0
+#define LWIP_IPV6 1
+#define LWIP_IPV6_MLD 0
+#define LWIP_IPV6_AUTOCONFIG 0
+
+#define MEMP_NUM_TCP_PCB_LISTEN 16
+#define MEMP_NUM_TCP_PCB 1024
+#define TCP_MSS 1460
+#define TCP_SND_BUF 16384
+#define TCP_SND_QUEUELEN (4 * (TCP_SND_BUF)/(TCP_MSS))
+
+#define MEM_LIBC_MALLOC 1
+#define MEMP_MEM_MALLOC 1
+
+#endif

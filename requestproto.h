@@ -1,5 +1,5 @@
 /**
- * @file sys.c
+ * @file requestproto.h
  * @author Ambroz Bizjak <ambrop7@gmail.com>
  * 
  * @section LICENSE
@@ -27,11 +27,24 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <system/BTime.h>
+#ifndef BADVPN_REQUESTPROTO_H
+#define BADVPN_REQUESTPROTO_H
 
-#include <lwip/sys.h>
+#include <stdint.h>
 
-u32_t sys_now (void)
-{
-    return btime_gettime();
-}
+#include <misc/packed.h>
+
+#define REQUESTPROTO_TYPE_CLIENT_REQUEST 1
+#define REQUESTPROTO_TYPE_CLIENT_ABORT 2
+#define REQUESTPROTO_TYPE_SERVER_REPLY 3
+#define REQUESTPROTO_TYPE_SERVER_FINISHED 4
+#define REQUESTPROTO_TYPE_SERVER_ERROR 5
+
+B_START_PACKED
+struct requestproto_header {
+    uint32_t request_id;
+    uint32_t type;
+} B_PACKED;
+B_END_PACKED
+
+#endif

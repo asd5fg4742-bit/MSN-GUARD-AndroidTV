@@ -1,5 +1,5 @@
 /**
- * @file sys.c
+ * @file perf.h
  * @author Ambroz Bizjak <ambrop7@gmail.com>
  * 
  * @section LICENSE
@@ -27,11 +27,10 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <system/BTime.h>
+#ifndef LWIP_CUSTOM_PERF_H
+#define LWIP_CUSTOM_PERF_H
 
-#include <lwip/sys.h>
+#define PERF_START
+#define PERF_STOP(x)
 
-u32_t sys_now (void)
-{
-    return btime_gettime();
-}
+#endif
